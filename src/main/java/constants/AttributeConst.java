@@ -29,6 +29,10 @@ public enum AttributeConst {
     EMP_ADMIN_FLG("admin_flag"),
     
     //管理者フラグ
+    ROLE_ADMIN(1),
+    ROLE_GENERAL(0),
+    
+    //削除フラグ
     DEL_FLAG_TRUE(1),
     DEL_FLAG_FALSE(0),
     

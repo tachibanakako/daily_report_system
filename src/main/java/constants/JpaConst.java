@@ -21,7 +21,7 @@ public interface JpaConst {
     String EMP_COL_DELETE_FLAG = "delete_flag";//削除フラグ
     
     int ROLE_ADMIN = 1;//管理者権限ON(管理者用)
-    int ROLE_GENELAL = 0;//管理者権限OFF(一般)
+    int ROLE_GENERAL = 0;//管理者権限OFF(一般)
     int EMP_DEL_TRUE = 1;//削除フラグON 削除済み
     int EMP_DEL_FALSE = 0;//削除フラグOFF 現役
     
@@ -60,8 +60,8 @@ public interface JpaConst {
     String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee As e WHERE e.deleteFlag = 0 AND e.code = :" + JPQL_PARM_PASSWORD;
     
     //指定した社員番号を保持する従業員の件数を取得
-    String Q_EMP_COUNT_RESISTERED_BY_CODE =ENTITY_EMP + ".countResisteredByCode";
-    String Q_EMP_COUNT_RESISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :" + JPQL_PARM_CODE;
+    String Q_EMP_COUNT_REGISTERED_BY_CODE =ENTITY_EMP + ".countResisteredByCode";
+    String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :" + JPQL_PARM_CODE;
     
     //すべての日報をidの降順に取得
     String Q_REP_GET_ALL = ENTITY_REP + ".getAll";
