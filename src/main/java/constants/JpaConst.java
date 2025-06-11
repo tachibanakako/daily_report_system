@@ -57,15 +57,15 @@ public interface JpaConst {
     
     //社員番号とハッシュ化済パスワードを条件に未削除の従業員を取得する
     String Q_EMP_GET_BY_CODE_AND_PASS = ENTITY_EMP + ".getByCodeAndPass";
-    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee As e WHERE e.deleteFlag = 0 AND e.code = :" + JPQL_PARM_PASSWORD;
+    String Q_EMP_GET_BY_CODE_AND_PASS_DEF = "SELECT e FROM Employee AS e WHERE e.deleteFlag = 0 AND e.code = :" + JPQL_PARM_CODE + " AND e.password = :" + JPQL_PARM_PASSWORD;
     
     //指定した社員番号を保持する従業員の件数を取得
-    String Q_EMP_COUNT_REGISTERED_BY_CODE =ENTITY_EMP + ".countResisteredByCode";
+    String Q_EMP_COUNT_REGISTERED_BY_CODE =ENTITY_EMP + ".countRegisteredByCode";
     String Q_EMP_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(e) FROM Employee AS e WHERE e.code = :" + JPQL_PARM_CODE;
     
     //すべての日報をidの降順に取得
     String Q_REP_GET_ALL = ENTITY_REP + ".getAll";
-    String Q_REP_GET_ALL_DEF = "SELECT r FORM Report AS r ORDER BY r.id DESC";
+    String Q_REP_GET_ALL_DEF = "SELECT r FROM Report AS r ORDER BY r.id DESC";
     
     //すべての日報件数を取得
     String Q_REP_COUNT = ENTITY_REP + ".count";
@@ -73,7 +73,7 @@ public interface JpaConst {
     
     //指定した従業員が作成した日報を全件idの降順で取得
     String Q_REP_GET_ALL_MINE = ENTITY_REP + ".getAllMine";
-    String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r + JPQL_PARM_EMPLOYEE +  WHERE r.employee = :" + JPQL_PARM_EMPLOYEE + "ORDER BY r.id DESC";
+    String Q_REP_GET_ALL_MINE_DEF = "SELECT r FROM Report AS r WHERE r.employee = :" + JPQL_PARM_EMPLOYEE + "ORDER BY r.id DESC";
     
     //指定した従業員が作成した日報件数を取得
     String Q_REP_COUNT_ALL_MINE = ENTITY_REP + ".countAllMine";
