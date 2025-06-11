@@ -26,6 +26,8 @@ public class EmployeeAction extends ActionBase {
     
     //一覧画面を表示
     public void index() throws ServletException, IOException{
+        //管理者かどうかのチェック
+        if(checkAdmin()) {
         //データ取得
         int page = getPage();
         List<EmployeeView> employees = service.getPerPage(page);
@@ -46,16 +48,19 @@ public class EmployeeAction extends ActionBase {
         //一覧画面表示
         forward(ForwardConst.FW_EMP_INDEX);
     }
+    }
     //新規登録画面
     public void entryNew() throws ServletException, IOException{
+        if(checkAdmin()) {
         putRequestScope(AttributeConst.TOKEN,getTokenId());
         putRequestScope(AttributeConst.EMPLOYEE, new EmployeeView());
         
         //表示
         forward(ForwardConst.FW_EMP_NEW);
-    }
+        }
+        }
     public void create()throws ServletException, IOException{
-        if(checkToken()) {
+        if(checkAdmin() && checkToken()) {
             EmployeeView ev = new EmployeeView(
                     null,
                     getRequestParam(AttributeConst.EMP_CODE),
@@ -85,6 +90,7 @@ public class EmployeeAction extends ActionBase {
         }
     }
     public void show()throws ServletException, IOException{
+        if(checkAdmin()) {
         //idでデータ取得
         EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
         
@@ -95,9 +101,12 @@ public class EmployeeAction extends ActionBase {
         }
         putRequestScope(AttributeConst.EMPLOYEE, ev);
         forward(ForwardConst.FW_EMP_SHOW);
+    
+        }
     }
     
     public void edit()throws ServletException, IOException{
+        if(checkAdmin()) {
         EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
         
         if(ev == null || ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
@@ -109,9 +118,10 @@ public class EmployeeAction extends ActionBase {
         putRequestScope(AttributeConst.EMPLOYEE, ev);
         
         forward(ForwardConst.FW_EMP_EDIT);
+        }
     }
     public void update()throws ServletException, IOException{
-        if (checkToken()) {
+        if (checkAdmin() && checkToken()) {
             EmployeeView ev = new EmployeeView(
                     toNumber(getRequestParam(AttributeConst.EMP_ID)),
                     getRequestParam(AttributeConst.EMP_CODE),
@@ -139,12 +149,24 @@ public class EmployeeAction extends ActionBase {
         }
     }
     public void destroy()throws ServletException, IOException{
-        if(checkToken()) {
+        if(checkAdmin() && checkToken()) {
             service.destroy(toNumber(getRequestParam(AttributeConst.EMP_ID)));
             
             putSessionScope(AttributeConst.FLUSH, MessageConst.I_DELETED.getMessage());
             
             redirect(ForwardConst.ACT_EMP, ForwardConst.CMD_INDEX);
+        }
+    }
+    
+    //ログイン中の従業員か管理者かチェック、管理者でないときエラー表示
+    //true 管理者、false 管理者ではない
+    private boolean checkAdmin()throws ServletException, IOException{
+        EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+        if(ev.getAdminFlag() != AttributeConst.ROLE_ADMIN.getIntegerValue()) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+            return false;
+        }else {
+            return true;
         }
     }
     
