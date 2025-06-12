@@ -3,7 +3,7 @@
 <%@ page import="constants.AttributeConst" %>
 <%@ page import="constants.ForwardConst" %>
 
-<c:set var ="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
+<c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
@@ -23,14 +23,14 @@
                     <th>氏名</th>
                     <th>操作</th>
                 </tr>
-                <c:forEach  var="employee" items="${employees}" varStatus="status">
+                <c:forEach var="employee" items="${employees}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${employee.code}" /></td>
                         <td><c:out value="${employee.name}" /></td>
                         <td>
                             <c:choose>
                                 <c:when test="${employee.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
-                                    (削除済み)
+                                    （削除済み）
                                 </c:when>
                                 <c:otherwise>
                                     <a href="<c:url value='?action=${actEmp}&command=${commShow}&id=${employee.id}' />">詳細を見る</a>
@@ -41,9 +41,9 @@
                 </c:forEach>
             </tbody>
         </table>
-        
+
         <div id="pagination">
-            (全 ${employees_count} 件)<br />
+            （全 ${employees_count} 件）<br />
             <c:forEach var="i" begin="1" end="${((employees_count - 1) / maxRow) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
@@ -56,6 +56,6 @@
             </c:forEach>
         </div>
         <p><a href="<c:url value='?action=${actEmp}&command=${commNew}' />">新規従業員の登録</a></p>
-    
+
     </c:param>
 </c:import>

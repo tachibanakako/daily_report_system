@@ -41,7 +41,7 @@ import lombok.Setter;
 
 public class Employee {
     @Id
-    @Column
+    @Column(name = JpaConst.EMP_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
